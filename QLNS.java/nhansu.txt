@@ -1,4 +1,0 @@
-LoaiNV;MaNV;HoTen;NgaySinh;NgayVaoLam;GioiTinh;SDT;DiaChi;MaCV;MaPB;LuongCB;TinhTrang;ThuocTinhRieng1;ThuocTinhRieng2
-ChuTtichsieucap;NV01;Nguyen Van A;1990-01-01;2020-01-01;Nam;090;HCM;CV1;PB1;5000000.0;Dang lam;2.5;0
-ThanhVvien(danthuong);NV02;daadada;2000-02-02;2023-02-02;Nu;091;HN;CV2;PB2;0.0;Dang lam;120.0;25000.0
-TV(nole);003;eqweq;2026-11-10;2026-11-10;Nam;012;VN;CV;PB;0.0;Lam;7.0;7.0

@@ -1,0 +1,85 @@
+classDiagram
+    class BanGhi {
+        <<interface>>
+        +getMa() String
+        +toFileString() String
+    }
+    class TinhLuong {
+        <<interface>>
+        +tinhLuong() double
+    }
+    class IFileText {
+        <<interface>>
+        +ghiFile(String)
+        +docFile(String)
+    }
+    class NhanVien {
+        <<abstract>>
+        -String maNV
+        -String maPB
+        -String maCV
+        -double luongCoBan
+        +tinhLuong()* double
+        +tinhLuongTheoCong(double,double,double)* double
+    }
+    class DanhSach~T~ {
+        -T[] ds
+        -int n
+        +them(T)
+        +sua(String,T)
+        +xoa(String) boolean
+        +timTheoMa(String) T
+        +sapXep(Comparator)
+    }
+    TinhLuong <|.. NhanVien
+    BanGhi <|.. NhanVien
+    NhanVien <|-- NhanVienChinhThuc
+    NhanVien <|-- NhanVienThoiVu
+    PhongBan "1" <-- "0..*" NhanVien : maPB
+    ChucVu "1" <-- "0..*" NhanVien : maCV
+    NhanVien "1" <-- "0..*" ChamCong : maNV
+    TrangThai "1" <-- "0..*" ChamCong : maTrangThai
+    Thuong "1" <-- "0..*" ChiTietThuong : maThuong
+    NhanVien "1" <-- "0..*" ChiTietThuong : maNV
+    QuyDinhTruLuong "1" <-- "0..*" ChiTietTruLuong : maQDTL
+    NhanVien "1" <-- "0..*" ChiTietTruLuong : maNV
+    NhanVien "1" <-- "0..*" BangLuong : maNV
+    DanhSach~T~ <|-- DanhSachNhanVien
+    DanhSach~T~ <|-- DanhSachPhongBan
+    DanhSach~T~ <|-- DanhSachChucVu
+    DanhSach~T~ <|-- DanhSachChamCong
+    DanhSach~T~ <|-- DanhSachTrangThai
+    DanhSach~T~ <|-- DanhSachQuyDinhThamNien
+    DanhSach~T~ <|-- DanhSachThuong
+    DanhSach~T~ <|-- DanhSachChiTietThuong
+    DanhSach~T~ <|-- DanhSachQuyDinhTruLuong
+    DanhSach~T~ <|-- DanhSachChiTietTruLuong
+    DanhSach~T~ <|-- DanhSachBangLuong
+    DanhSachNhanVien o-- NhanVien
+    DanhSachPhongBan o-- PhongBan
+    DanhSachChucVu o-- ChucVu
+    DanhSachChamCong o-- ChamCong
+    DanhSachTrangThai o-- TrangThai
+    DanhSachQuyDinhThamNien o-- QuyDinhNamPhuCapThamNien
+    DanhSachThuong o-- Thuong
+    DanhSachChiTietThuong o-- ChiTietThuong
+    DanhSachQuyDinhTruLuong o-- QuyDinhTruLuong
+    DanhSachChiTietTruLuong o-- ChiTietTruLuong
+    DanhSachBangLuong o-- BangLuong
+    IFileText <|.. QuanLyNhanSu
+    QuanLyNhanSu *-- DanhSachNhanVien
+    QuanLyNhanSu *-- DanhSachPhongBan
+    QuanLyNhanSu *-- DanhSachChucVu
+    QuanLyNhanSu *-- DanhSachChamCong
+    QuanLyNhanSu *-- DanhSachTrangThai
+    QuanLyNhanSu *-- DanhSachQuyDinhThamNien
+    QuanLyNhanSu *-- DanhSachThuong
+    QuanLyNhanSu *-- DanhSachChiTietThuong
+    QuanLyNhanSu *-- DanhSachQuyDinhTruLuong
+    QuanLyNhanSu *-- DanhSachChiTietTruLuong
+    QuanLyNhanSu *-- DanhSachBangLuong
+    QuanLyNhanSu --> FileStore
+    QuanLyNhanSu ..> BangLuong : lap luong thang
+    Main --> UngDungTerminal
+    UngDungTerminal --> NhapLieu
+    UngDungTerminal --> QuanLyNhanSu

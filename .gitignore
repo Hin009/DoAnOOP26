@@ -1,1 +1,5 @@
-*.class
+**/build/
+**/*.class
+**/reports/
+**/data/qlns.txt
+**/bang_cham_cong.txt

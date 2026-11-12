@@ -1,125 +1,58 @@
 import java.time.LocalDate;
 
-public abstract class NhanVien implements TinhLuong {
-    private String maNV;
-    private String hoTen;
-    private LocalDate ngaySinh;
-    private LocalDate ngayVaoLam;
-    private String gioiTinh;
-    private String soDienThoai;
-    private String diaChi;
-    private String maCV;
-    private String maPB;
+public abstract class NhanVien implements TinhLuong, BanGhi {
+    private final String maNV;
+    private String hoTen, gioiTinh, soDienThoai, diaChi, maCV, maPB, tinhTrang;
+    private LocalDate ngaySinh, ngayVaoLam;
     private double luongCoBan;
-    private String tinhTrang;
-
     public NhanVien(String maNV, String hoTen, LocalDate ngaySinh, LocalDate ngayVaoLam,
-            String gioiTinh, String soDienThoai, String diaChi,
-            String maCV, String maPB, double luongCoBan, String tinhTrang) {
-        this.maNV = maNV;
-        this.hoTen = hoTen;
-        this.ngaySinh = ngaySinh;
-        this.ngayVaoLam = ngayVaoLam;
-        this.gioiTinh = gioiTinh;
-        this.soDienThoai = soDienThoai;
-        this.diaChi = diaChi;
-        this.maCV = maCV;
-        this.maPB = maPB;
-        this.luongCoBan = luongCoBan;
-        this.tinhTrang = tinhTrang;
+            String gioiTinh, String soDienThoai, String diaChi, String maCV, String maPB,
+            double luongCoBan, String tinhTrang) {
+        this.maNV = KiemTra.ma(maNV);
+        setHoTen(hoTen); setNgaySinh(ngaySinh); setNgayVaoLam(ngayVaoLam);
+        setGioiTinh(gioiTinh); setSoDienThoai(soDienThoai); setDiaChi(diaChi);
+        setMaCV(maCV); setMaPB(maPB); setLuongCoBan(luongCoBan); setTinhTrang(tinhTrang);
     }
-
-    public String getMaNV() {
-        return maNV;
+    @Override public String getMa() { return maNV; }
+    public String getMaNV() { return maNV; }
+    public String getHoTen() { return hoTen; }
+    public final void setHoTen(String s) { hoTen = KiemTra.chuoi(s); }
+    public LocalDate getNgaySinh() { return ngaySinh; }
+    public final void setNgaySinh(LocalDate d) {
+        KiemTra.ngay(d);
+        if (ngayVaoLam != null && !d.isBefore(ngayVaoLam)) throw new IllegalArgumentException("Ngay sinh phai truoc ngay vao lam.");
+        ngaySinh = d;
     }
-
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public LocalDate getNgayVaoLam() { return ngayVaoLam; }
+    public final void setNgayVaoLam(LocalDate d) {
+        KiemTra.ngay(d);
+        if (ngaySinh != null && !d.isAfter(ngaySinh)) throw new IllegalArgumentException("Ngay vao lam phai sau ngay sinh.");
+        ngayVaoLam = d;
     }
-
-    public String getHoTen() {
-        return hoTen;
+    public String getGioiTinh() { return gioiTinh; }
+    public final void setGioiTinh(String s) { gioiTinh = KiemTra.chuoi(s); }
+    public String getSoDienThoai() { return soDienThoai; }
+    public final void setSoDienThoai(String s) { soDienThoai = KiemTra.soDienThoai(s); }
+    public String getDiaChi() { return diaChi; }
+    public final void setDiaChi(String s) { diaChi = KiemTra.chuoi(s); }
+    public String getMaCV() { return maCV; }
+    public final void setMaCV(String s) { maCV = KiemTra.ma(s); }
+    public String getMaPB() { return maPB; }
+    public final void setMaPB(String s) { maPB = KiemTra.ma(s); }
+    public double getLuongCoBan() { return luongCoBan; }
+    public final void setLuongCoBan(double n) { luongCoBan = KiemTra.so(n); }
+    public String getTinhTrang() { return tinhTrang; }
+    public final void setTinhTrang(String s) {
+        s = KiemTra.chuoi(s);
+        if (!s.equals("DANG_LAM") && !s.equals("NGHI_VIEC")) throw new IllegalArgumentException("Tinh trang: DANG_LAM / NGHI_VIEC.");
+        tinhTrang = s;
     }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
+    protected String duLieuChung() {
+        return KiemTra.dong(maNV, hoTen, ngaySinh, ngayVaoLam, gioiTinh, soDienThoai, diaChi, maCV, maPB, luongCoBan, tinhTrang);
     }
-
-    public LocalDate getNgaySinh() {
-        return ngaySinh;
-    }
-
-    public void setNgaySinh(LocalDate ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
-
-    public LocalDate getNgayVaoLam() {
-        return ngayVaoLam;
-    }
-
-    public void setNgayVaoLam(LocalDate ngayVaoLam) {
-        this.ngayVaoLam = ngayVaoLam;
-    }
-
-    public String getGioiTinh() {
-        return gioiTinh;
-    }
-
-    public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
-    public String getMaCV() {
-        return maCV;
-    }
-
-    public void setMaCV(String maCV) {
-        this.maCV = maCV;
-    }
-
-    public String getMaPB() {
-        return maPB;
-    }
-
-    public void setMaPB(String maPB) {
-        this.maPB = maPB;
-    }
-
-    public double getLuongCoBan() {
-        return luongCoBan;
-    }
-
-    public void setLuongCoBan(double luongCoBan) {
-        this.luongCoBan = luongCoBan;
-    }
-
-    public String getTinhTrang() {
-        return tinhTrang;
-    }
-
-    public void setTinhTrang(String tinhTrang) {
-        this.tinhTrang = tinhTrang;
-    }
-
-    @Override
-    public String toString() {
-        return maNV + ";" + hoTen + ";" + ngaySinh + ";" + ngayVaoLam + ";" + gioiTinh + ";"
-                + soDienThoai + ";" + diaChi + ";" + maCV + ";" + maPB + ";" + luongCoBan + ";" + tinhTrang;
-    }
+    /** Luong co so; bang luong thang su dung phien ban co tham so ben duoi. */
+    @Override public abstract double tinhLuong();
+    public abstract double tinhLuongTheoCong(double ngayCong, double gioCong, double ngayChuan);
+    public abstract String getLoai();
+    @Override public String toString() { return toFileString(); }
 }
