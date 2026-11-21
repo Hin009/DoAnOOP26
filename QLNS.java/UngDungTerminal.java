@@ -258,7 +258,9 @@ public class UngDungTerminal {
         if(c==3) {
             String ma=in.ma("Ma NV"); boolean found=false;
             for(BangLuong b:q.bangLuongThang(ky)) if(b.getMaNV().equals(ma)) {
-                System.out.println("PHIEU LUONG "+ky+" - "+ma);
+                NhanVien nv = q.getDsNhanVien().timTheoMa(b.getMaNV());
+                String hoTen = nv == null ? "Chua co thong tin ho ten" : nv.getHoTen();
+                System.out.println("PHIEU LUONG "+ky+" - "+b.getMaNV()+" - "+hoTen);
                 System.out.printf(Locale.ROOT,"Cong: %.3f | Gio: %.2f | Ngay chuan: %.2f%nLuong theo cong: %,.0f%nPC chuc vu: %,.0f | PC tham nien: %,.0f%nThuong: %,.0f | Khau tru: %,.0f%nTHUC NHAN: %,.0f VND%n",
                     b.getSoNgayCongHuongLuong(),b.getSoGioHuongLuong(),b.getNgayCongTieuChuan(),b.getLuongTheoCong(),b.getPhuCapChucVu(),b.getPhuCapThamNien(),b.getTongThuong(),b.getTongKhauTru(),b.getLuongThucNhan());
                 System.out.println(b.getCongThucTinh()); found=true;

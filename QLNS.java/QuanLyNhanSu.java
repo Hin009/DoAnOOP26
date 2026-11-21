@@ -146,6 +146,15 @@ public class QuanLyNhanSu implements IFileText {
         KiemTra.duong(ngayChuan);
         if (ngayChuan > 31) throw new IllegalArgumentException("Ngay cong chuan khong qua 31.");
         kiemTraToanVen();
+        boolean coDuLieuKy = false;
+        for (ChamCong cc : dsChamCong)
+            if (YearMonth.from(cc.getNgay()).equals(ky)) { coDuLieuKy = true; break; }
+        if (!coDuLieuKy) for (ChiTietThuong ct : dsCTThuong)
+            if (YearMonth.from(ct.getNgayThuong()).equals(ky)) { coDuLieuKy = true; break; }
+        if (!coDuLieuKy) for (ChiTietTruLuong ct : dsCTTruLuong)
+            if (YearMonth.from(ct.getNgayTru()).equals(ky)) { coDuLieuKy = true; break; }
+        if (!coDuLieuKy)
+            throw new IllegalArgumentException("Ky " + ky + " chua co cham cong, thuong hoac khau tru. Kiem tra du lieu truoc khi lap luong.");
         DanhSachBangLuong moi = new DanhSachBangLuong();
         for (BangLuong bl : dsBangLuong) if (bl.getThang() != ky.getMonthValue() || bl.getNam() != ky.getYear()) moi.them(bl);
         for (NhanVien nv : dsNhanVien) {
