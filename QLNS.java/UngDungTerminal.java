@@ -1,7 +1,11 @@
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 /** Giao dien terminal; khong chua cong thuc tinh luong. */
@@ -75,24 +79,18 @@ public class UngDungTerminal {
             }
         }
     }
+    /** Menu gon: 5 dong lua chon, vua terminal nho. */
     private void hienMenuChinh() {
-        String vien = "+" + "-".repeat(29) + "+" + "-".repeat(29) + "+";
-        System.out.println();
-        System.out.println("+" + "-".repeat(59) + "+");
-        System.out.printf("| %-57s |%n", "QUAN LY NHAN SU VA TINH LUONG");
-        System.out.println(vien);
+        System.out.println("\n=== QUAN LY NHAN SU VA TINH LUONG ===");
         String[][] muc = {
-            {"1. Nhan vien", "2. Phong ban"},
-            {"3. Chuc vu", "4. Cham cong"},
-            {"5. Trang thai", "6. Phu cap tham nien"},
-            {"7. Danh muc thuong", "8. Chi tiet thuong"},
-            {"9. Quy dinh tru luong", "10. Chi tiet tru luong"},
-            {"11. Bang luong thang", "12. Xuat bao cao text"},
-            {"13. Tim kiem / thong ke", "0. Luu va thoat"}
+            {"1. Nhan vien", "2. Phong ban", "3. Chuc vu"},
+            {"4. Cham cong", "5. Trang thai", "6. PC tham nien"},
+            {"7. Thuong", "8. CT thuong", "9. QD tru luong"},
+            {"10. CT tru luong", "11. Bang luong", "12. Xuat bao cao"},
+            {"13. Tim/Thong ke", "0. Luu va thoat", ""}
         };
-        for (String[] dong : muc) System.out.printf("| %-27s | %-27s |%n", dong[0], dong[1]);
-        System.out.println(vien);
-        System.out.println("/huy: Huy thao tac dang nhap, ve menu chinh.");
+        for (String[] dong : muc) System.out.printf("%-18s %-18s %s%n", dong[0], dong[1], dong[2]);
+        System.out.println("/huy: Huy | CT: Chi tiet | QD: Quy dinh | PC: Phu cap");
     }
     private <T extends BanGhi> void crud(DanhSach<T> ds, String header, Function<String,T> nhap) throws IOException {
         while(true) {
@@ -101,7 +99,7 @@ public class UngDungTerminal {
             if(c==0) return;
             if(c==1) {
                 if (ds instanceof DanhSachNhanVien) ds.xuatDanhSach();
-                else hienDanhSach(ds, header);
+                else hienDanhSach(ds.danhSach(), header);
                 continue;
             }
             if(c<2 || c>5) { System.out.println("Chon tu 0 den 5."); continue; }
@@ -150,12 +148,12 @@ public class UngDungTerminal {
     }
 
     private void hienBanGhi(BanGhi x, String header) {
-        if (x instanceof NhanVien) DanhSachNhanVien.xuatBang(List.of((NhanVien) x));
-        else hienDanhSach(List.of(x), header);
+        if (x instanceof NhanVien) DanhSachNhanVien.xuatBang(new NhanVien[] { (NhanVien) x });
+        else hienDanhSach(new BanGhi[] { x }, header);
     }
 
     /** Bang hien thi terminal tach khoi dinh dang luu file cua cac thuc the. */
-    private void hienDanhSach(Iterable<? extends BanGhi> nguon, String header) {
+    private void hienDanhSach(BanGhi[] nguon, String header) {
         String[] cot = header.split(";", -1);
         boolean[] cotTien = new boolean[cot.length];
         int[] rong = new int[cot.length];
@@ -165,7 +163,8 @@ public class UngDungTerminal {
             rong[i] = cot[i].length();
         }
         java.text.NumberFormat so = java.text.NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN"));
-        List<String[]> rows = new ArrayList<>();
+        String[][] rows = new String[nguon.length][];
+        int viTri = 0;
         for (BanGhi x : nguon) {
             String[] row = x.toFileString().split(";", -1);
             if (x instanceof ChamCong) {
@@ -185,7 +184,7 @@ public class UngDungTerminal {
                 row[4] = row[4].equals("LAN") ? "Lan" : "Gio";
             }
             for (int i = 0; i < cot.length; i++) rong[i] = Math.max(rong[i], row[i].length());
-            rows.add(row);
+            rows[viTri++] = row;
         }
         StringBuilder vien = new StringBuilder("+");
         for (int r : rong) vien.append("-".repeat(r + 2)).append('+');
@@ -195,8 +194,8 @@ public class UngDungTerminal {
         System.out.println(vien);
         for (String[] row : rows) inDongBang(row, rong, cotTien);
         System.out.println(vien);
-        if (rows.isEmpty()) System.out.println("Chua co du lieu.");
-        System.out.println("So luong: " + rows.size());
+        if (rows.length == 0) System.out.println("Chua co du lieu.");
+        System.out.println("So luong: " + rows.length);
     }
 
     private void inDongBang(String[] cells, int[] rong, boolean[] canPhai) {
@@ -269,7 +268,7 @@ public class UngDungTerminal {
     }
     public void hienBangLuong(YearMonth ky) {
         System.out.println();
-        q.noiDungBaoCao(ky).forEach(System.out::println);
+        for (String line : q.noiDungBaoCao(ky)) System.out.println(line);
     }
     public void hienNhanVien() {
         q.getDsNhanVien().xuatDanhSach();

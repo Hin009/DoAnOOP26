@@ -1,15 +1,18 @@
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.StringJoiner;
 
 /** API module nhan vien cu, tai su dung mang cua DanhSachNhanVien. */
 public class QuanLyNhanVien extends DanhSachNhanVien implements IFileText {
     public QuanLyNhanVien() { super(); }
     @Override public void ghiFile(String tenFile) throws IOException {
-        List<String> lines = new ArrayList<>();
+        String[] lines = new String[getSoLuong() + 2];
         String[] cot = "LoaiNV;MaNV;HoTen;NgaySinh;NgayVaoLam;GioiTinh;SDT;DiaChi;MaCV;MaPB;LuongCB;TinhTrang;ThuocTinhRieng1;ThuocTinhRieng2".split(";");
-        List<String[]> rows = new ArrayList<>();
+        String[][] rows = new String[getSoLuong()][];
+        int viTri = 0;
         java.text.NumberFormat tien = java.text.NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN"));
         tien.setMaximumFractionDigits(340);
         int[] rong = Arrays.stream(cot).mapToInt(String::length).toArray();
@@ -18,11 +21,11 @@ public class QuanLyNhanVien extends DanhSachNhanVien implements IFileText {
             row[10] = tien.format(Double.parseDouble(row[10]));
             if (nv instanceof NhanVienThoiVu) row[13] = tien.format(Double.parseDouble(row[13]));
             for (int i=0; i<cot.length; i++) rong[i] = Math.max(rong[i], row[i].length());
-            rows.add(row);
+            rows[viTri++] = row;
         }
-        lines.add("# === DANH SACH NHAN VIEN ===");
-        lines.add(canCot(cot, rong));
-        for (String[] row : rows) lines.add(canCot(row, rong));
+        lines[0] = "# === DANH SACH NHAN VIEN ===";
+        lines[1] = canCot(cot, rong);
+        for (int i=0; i<rows.length; i++) lines[i + 2] = canCot(rows[i], rong);
         FileStore.ghiNguyenTu(Path.of(tenFile), lines);
     }
     private static String canCot(String[] row, int[] rong) {
@@ -31,11 +34,11 @@ public class QuanLyNhanVien extends DanhSachNhanVien implements IFileText {
         return line.toString().stripTrailing();
     }
     @Override public void docFile(String tenFile) throws IOException {
-        List<String> lines = Files.readAllLines(Path.of(tenFile), StandardCharsets.UTF_8);
+        String[] lines = FileStore.docDong(Path.of(tenFile));
         DanhSachNhanVien tam = new DanhSachNhanVien();
         boolean coTieuDe = false;
-        for (int i=0;i<lines.size();i++) {
-            String line = lines.get(i).strip();
+        for (int i=0;i<lines.length;i++) {
+            String line = lines[i].strip();
             if (line.isBlank() || line.startsWith("#")) continue;
             if (!coTieuDe) {
                 String[] cot = line.split(";", -1);

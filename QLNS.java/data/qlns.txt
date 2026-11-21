@@ -1,0 +1,286 @@
+QLNS_TEXT_V1
+
+# === PhongBan ===
+# Loai     ; Ma PB ; Ten phong ; Truong phong
+  PhongBan ; PB01  ; Nhan su   ; NV01
+  PhongBan ; PB02  ; IT        ; NV3
+
+# === ChucVu ===
+# Loai   ; Ma CV ; Ten chuc vu  ; Phu cap
+  ChucVu ; CV01  ; Nhan vien    ; 300.000
+  ChucVu ; CV02  ; Truong phong ; 1.000.000
+
+# === NhanVienThoiVu ===
+# Loai           ; CT/TV ; Ma NV ; Ho ten           ; Ngay sinh  ; Ngay vao lam ; Gioi tinh ; Dien thoai ; Dia chi                ; Ma CV ; Ma PB ; Luong co ban ; Tinh trang ; Gio/ngay ; Don gia/gio
+  NhanVienThoiVu ; TV    ; NV02  ; Nguyen Minh Quan ; 2004-07-12 ; 2023-06-01   ; Nam       ; 1234567890 ; 336 nguyen thuong hien ; CV01  ; PB02  ; 0            ; DANG_LAM   ; 8.0      ; 30.000
+
+# === NhanVienChinhThuc ===
+# Loai              ; CT/TV ; Ma NV ; Ho ten          ; Ngay sinh  ; Ngay vao lam ; Gioi tinh ; Dien thoai ; Dia chi          ; Ma CV ; Ma PB ; Luong co ban ; Tinh trang ; He so luong ; Du phong
+  NhanVienChinhThuc ; CT    ; NV3   ; Nguyen Ngoc Son ; 2004-10-01 ; 2022-05-10   ; Nam       ; 1234567890 ; 24/1 Kha Van Can ; CV02  ; PB02  ; 8.000.000    ; DANG_LAM   ; 1.0         ; 0
+  NhanVienChinhThuc ; CT    ; NV01  ; Nguyen Van An   ; 1990-01-01 ; 2020-01-01   ; Nam       ; 0901234567 ; TP HCM           ; CV02  ; PB01  ; 5.200.000    ; DANG_LAM   ; 2.0         ; 0
+
+# === TrangThai ===
+# Loai      ; Ma TT ; Ten trang thai        ; He so ; Gio mac dinh
+  TrangThai ; LV    ; Lam viec              ; 1.0   ; 0.0
+  TrangThai ; MUON  ; Di muon               ; 1.0   ; 0.0
+  TrangThai ; VANG  ; Nghi khong luong      ; 0.0   ; 0.0
+  TrangThai ; PHEP  ; Nghi phep huong luong ; 1.0   ; 8.0
+
+# === ChamCong ===
+# Loai     ; Ma CC      ; Ma NV ; Ngay       ; Gio vao ; Gio ra ; Ma TT
+  ChamCong ; CC_NV01_1  ; NV01  ; 2026-11-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_1  ; NV02  ; 2026-11-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_2  ; NV01  ; 2026-11-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_2  ; NV02  ; 2026-11-02 ; 08:30   ; 16:00  ; MUON
+  ChamCong ; CC_NV01_3  ; NV01  ; 2026-11-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_3  ; NV02  ; 2026-11-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_4  ; NV01  ; 2026-11-04 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_4  ; NV02  ; 2026-11-04 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_5  ; NV01  ; 2026-11-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_5  ; NV02  ; 2026-11-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_6  ; NV01  ; 2026-11-06 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_6  ; NV02  ; 2026-11-06 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_7  ; NV01  ; 2026-11-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_7  ; NV02  ; 2026-11-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_8  ; NV01  ; 2026-11-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_8  ; NV02  ; 2026-11-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_9  ; NV01  ; 2026-11-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_9  ; NV02  ; 2026-11-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_10 ; NV01  ; 2026-11-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_10 ; NV02  ; 2026-11-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_11 ; NV01  ; 2026-11-11 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_11 ; NV02  ; 2026-11-11 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_12 ; NV01  ; 2026-11-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_12 ; NV02  ; 2026-11-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_13 ; NV01  ; 2026-11-13 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_13 ; NV02  ; 2026-11-13 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_14 ; NV01  ; 2026-11-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_14 ; NV02  ; 2026-11-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_15 ; NV01  ; 2026-11-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_15 ; NV02  ; 2026-11-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_16 ; NV01  ; 2026-11-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_16 ; NV02  ; 2026-11-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_17 ; NV01  ; 2026-11-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_17 ; NV02  ; 2026-11-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_18 ; NV01  ; 2026-11-18 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_18 ; NV02  ; 2026-11-18 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_19 ; NV01  ; 2026-11-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_19 ; NV02  ; 2026-11-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_20 ; NV01  ; 2026-11-20 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_20 ; NV02  ; 2026-11-20 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_21 ; NV01  ; 2026-11-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_21 ; NV02  ; 2026-11-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_22 ; NV01  ; 2026-11-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_22 ; NV02  ; 2026-11-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_23 ; NV01  ; 2026-11-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_23 ; NV02  ; 2026-11-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_24 ; NV01  ; 2026-11-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_24 ; NV02  ; 2026-11-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_25 ; NV01  ; 2026-11-25 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_25 ; NV02  ; 2026-11-25 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_26 ; NV01  ; 2026-11-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_26 ; NV02  ; 2026-11-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_1   ; NV3   ; 2026-11-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_27 ; NV02  ; 2027-11-11 ; 08:00   ; 15:30  ; LV
+  ChamCong ; CC_NV01_27 ; NV01  ; 2026-09-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_28 ; NV01  ; 2026-09-02 ; -       ; -      ; PHEP
+  ChamCong ; CC_NV01_29 ; NV01  ; 2026-09-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_30 ; NV01  ; 2026-09-04 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_31 ; NV01  ; 2026-09-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_32 ; NV01  ; 2026-09-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_33 ; NV01  ; 2026-09-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_34 ; NV01  ; 2026-09-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_35 ; NV01  ; 2026-09-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_36 ; NV01  ; 2026-09-11 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_37 ; NV01  ; 2026-09-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_38 ; NV01  ; 2026-09-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_39 ; NV01  ; 2026-09-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_40 ; NV01  ; 2026-09-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_41 ; NV01  ; 2026-09-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_42 ; NV01  ; 2026-09-18 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_43 ; NV01  ; 2026-09-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_44 ; NV01  ; 2026-09-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_45 ; NV01  ; 2026-09-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_46 ; NV01  ; 2026-09-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_47 ; NV01  ; 2026-09-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_48 ; NV01  ; 2026-09-25 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_49 ; NV01  ; 2026-09-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_50 ; NV01  ; 2026-09-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_51 ; NV01  ; 2026-09-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_52 ; NV01  ; 2026-09-30 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_28 ; NV02  ; 2026-09-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_29 ; NV02  ; 2026-09-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_30 ; NV02  ; 2026-09-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_31 ; NV02  ; 2026-09-04 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_32 ; NV02  ; 2026-09-05 ; 08:30   ; 16:00  ; MUON
+  ChamCong ; CC_NV02_33 ; NV02  ; 2026-09-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_34 ; NV02  ; 2026-09-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_35 ; NV02  ; 2026-09-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_36 ; NV02  ; 2026-09-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_37 ; NV02  ; 2026-09-11 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_38 ; NV02  ; 2026-09-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_39 ; NV02  ; 2026-09-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_40 ; NV02  ; 2026-09-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_41 ; NV02  ; 2026-09-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_42 ; NV02  ; 2026-09-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_43 ; NV02  ; 2026-09-18 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_44 ; NV02  ; 2026-09-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_45 ; NV02  ; 2026-09-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_46 ; NV02  ; 2026-09-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_47 ; NV02  ; 2026-09-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_48 ; NV02  ; 2026-09-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_49 ; NV02  ; 2026-09-25 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_50 ; NV02  ; 2026-09-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_51 ; NV02  ; 2026-09-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_52 ; NV02  ; 2026-09-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_53 ; NV02  ; 2026-09-30 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_2   ; NV3   ; 2026-09-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_3   ; NV3   ; 2026-09-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_4   ; NV3   ; 2026-09-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_5   ; NV3   ; 2026-09-04 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_6   ; NV3   ; 2026-09-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_7   ; NV3   ; 2026-09-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_8   ; NV3   ; 2026-09-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_9   ; NV3   ; 2026-09-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_10  ; NV3   ; 2026-09-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_11  ; NV3   ; 2026-09-11 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_12  ; NV3   ; 2026-09-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_13  ; NV3   ; 2026-09-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_14  ; NV3   ; 2026-09-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_15  ; NV3   ; 2026-09-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_16  ; NV3   ; 2026-09-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_17  ; NV3   ; 2026-09-18 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_18  ; NV3   ; 2026-09-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_19  ; NV3   ; 2026-09-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_20  ; NV3   ; 2026-09-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_21  ; NV3   ; 2026-09-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_22  ; NV3   ; 2026-09-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_23  ; NV3   ; 2026-09-25 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_24  ; NV3   ; 2026-09-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_25  ; NV3   ; 2026-09-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_26  ; NV3   ; 2026-09-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_27  ; NV3   ; 2026-09-30 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_53 ; NV01  ; 2026-10-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_54 ; NV01  ; 2026-10-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_55 ; NV01  ; 2026-10-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_56 ; NV01  ; 2026-10-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_57 ; NV01  ; 2026-10-06 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_58 ; NV01  ; 2026-10-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_59 ; NV01  ; 2026-10-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_60 ; NV01  ; 2026-10-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_61 ; NV01  ; 2026-10-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_62 ; NV01  ; 2026-10-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_63 ; NV01  ; 2026-10-13 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_64 ; NV01  ; 2026-10-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_65 ; NV01  ; 2026-10-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_66 ; NV01  ; 2026-10-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_67 ; NV01  ; 2026-10-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_68 ; NV01  ; 2026-10-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_69 ; NV01  ; 2026-10-20 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_70 ; NV01  ; 2026-10-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_71 ; NV01  ; 2026-10-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_72 ; NV01  ; 2026-10-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_73 ; NV01  ; 2026-10-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_74 ; NV01  ; 2026-10-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_75 ; NV01  ; 2026-10-27 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_76 ; NV01  ; 2026-10-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_77 ; NV01  ; 2026-10-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV01_78 ; NV01  ; 2026-10-30 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_54 ; NV02  ; 2026-10-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_55 ; NV02  ; 2026-10-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_56 ; NV02  ; 2026-10-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_57 ; NV02  ; 2026-10-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_58 ; NV02  ; 2026-10-06 ; 08:30   ; 16:00  ; MUON
+  ChamCong ; CC_NV02_59 ; NV02  ; 2026-10-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_60 ; NV02  ; 2026-10-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_61 ; NV02  ; 2026-10-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_62 ; NV02  ; 2026-10-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_63 ; NV02  ; 2026-10-12 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_64 ; NV02  ; 2026-10-13 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_65 ; NV02  ; 2026-10-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_66 ; NV02  ; 2026-10-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_67 ; NV02  ; 2026-10-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_68 ; NV02  ; 2026-10-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_69 ; NV02  ; 2026-10-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_70 ; NV02  ; 2026-10-20 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_71 ; NV02  ; 2026-10-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_72 ; NV02  ; 2026-10-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_73 ; NV02  ; 2026-10-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_74 ; NV02  ; 2026-10-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_75 ; NV02  ; 2026-10-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_76 ; NV02  ; 2026-10-27 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_77 ; NV02  ; 2026-10-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_78 ; NV02  ; 2026-10-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV02_79 ; NV02  ; 2026-10-30 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_28  ; NV3   ; 2026-10-01 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_29  ; NV3   ; 2026-10-02 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_30  ; NV3   ; 2026-10-03 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_31  ; NV3   ; 2026-10-05 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_32  ; NV3   ; 2026-10-06 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_33  ; NV3   ; 2026-10-07 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_34  ; NV3   ; 2026-10-08 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_35  ; NV3   ; 2026-10-09 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_36  ; NV3   ; 2026-10-10 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_37  ; NV3   ; 2026-10-12 ; -       ; -      ; VANG
+  ChamCong ; CC_NV3_38  ; NV3   ; 2026-10-13 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_39  ; NV3   ; 2026-10-14 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_40  ; NV3   ; 2026-10-15 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_41  ; NV3   ; 2026-10-16 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_42  ; NV3   ; 2026-10-17 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_43  ; NV3   ; 2026-10-19 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_44  ; NV3   ; 2026-10-20 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_45  ; NV3   ; 2026-10-21 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_46  ; NV3   ; 2026-10-22 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_47  ; NV3   ; 2026-10-23 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_48  ; NV3   ; 2026-10-24 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_49  ; NV3   ; 2026-10-26 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_50  ; NV3   ; 2026-10-27 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_51  ; NV3   ; 2026-10-28 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_52  ; NV3   ; 2026-10-29 ; 08:00   ; 16:00  ; LV
+  ChamCong ; CC_NV3_53  ; NV3   ; 2026-10-30 ; 08:00   ; 16:00  ; LV
+
+# === QuyDinhNamPhuCapThamNien ===
+# Loai                     ; Ma QD ; Tu nam ; Den nam ; Phu cap
+  QuyDinhNamPhuCapThamNien ; TN01  ; 1      ; 4       ; 200.000
+  QuyDinhNamPhuCapThamNien ; TN02  ; 6      ; 20      ; 500.000
+
+# === Thuong ===
+# Loai   ; Ma thuong ; Ten thuong           ; So tien ; Dieu kien
+  Thuong ; TH01      ; Hoan thanh cong viec ; 500.000 ; Duoc quan ly phe duyet
+  Thuong ; TH02      ; Tang Ca              ; 300.000 ; duoc quan ly duyet
+
+# === ChiTietThuong ===
+# Loai          ; Ma CT          ; Ma NV ; Ma thuong ; Ngay       ; So tien ; Ghi chu
+  ChiTietThuong ; CT01           ; NV01  ; TH01      ; 2026-11-10 ; 500.000 ; Hoan thanh du an
+  ChiTietThuong ; CT02           ; NV02  ; TH02      ; 2026-11-11 ; 300.000 ; Tang ca
+  ChiTietThuong ; CT_20269_NV01  ; NV01  ; TH01      ; 2026-09-24 ; 500.000 ; Thuong hoan thanh cong viec thang 9 (mau)
+  ChiTietThuong ; CT_20269_NV02  ; NV02  ; TH01      ; 2026-09-24 ; 200.000 ; Thuong hoan thanh cong viec thang 9 (mau)
+  ChiTietThuong ; CT_20269_NV3   ; NV3   ; TH01      ; 2026-09-24 ; 300.000 ; Thuong hoan thanh cong viec thang 9 (mau)
+  ChiTietThuong ; CT_202610_NV01 ; NV01  ; TH01      ; 2026-10-24 ; 500.000 ; Thuong hoan thanh cong viec thang 10 (mau)
+  ChiTietThuong ; CT_202610_NV02 ; NV02  ; TH01      ; 2026-10-24 ; 200.000 ; Thuong hoan thanh cong viec thang 10 (mau)
+  ChiTietThuong ; CT_202610_NV3  ; NV3   ; TH01      ; 2026-10-24 ; 300.000 ; Thuong hoan thanh cong viec thang 10 (mau)
+
+# === QuyDinhTruLuong ===
+# Loai            ; Ma QD ; Ten quy dinh  ; Dieu kien ; So tien ; Don vi
+  QuyDinhTruLuong ; TR01  ; Di muon       ; MUON      ; 50.000  ; LAN
+  QuyDinhTruLuong ; TR02  ; Khau tru khac ; CHUNG     ; 100.000 ; LAN
+
+# === ChiTietTruLuong ===
+# Loai            ; Ma CT            ; Ma NV ; Ma QD ; Ngay       ; So tien ; Ghi chu
+  ChiTietTruLuong ; TRCT01           ; NV02  ; TR01  ; 2026-11-02 ; 50.000  ; Di muon 30 phut
+  ChiTietTruLuong ; TRCT02           ; NV3   ; TR02  ; 2026-11-11 ; 100.000 ; Di tre
+  ChiTietTruLuong ; TRCT_20269_NV02  ; NV02  ; TR01  ; 2026-09-05 ; 50.000  ; Di muon 30 phut (mau)
+  ChiTietTruLuong ; TRCT_202610_NV02 ; NV02  ; TR01  ; 2026-10-06 ; 50.000  ; Di muon 30 phut (mau)
+  ChiTietTruLuong ; TRCT_202610_NV3  ; NV3   ; TR02  ; 2026-10-19 ; 100.000 ; Khau tru duoc duyet (mau)
+
+# === BangLuong ===
+# Loai      ; Ma BL           ; Ma NV ; Thang ; Nam  ; Luong co ban ; He so ; Don gia/gio ; Ngay chuan ; Ngay cong ; Gio huong luong ; Luong theo cong ; PC chuc vu ; PC tham nien ; Thuong  ; Khau tru ; Thuc nhan  ; Ngay lap   ; Cong thuc
+  BangLuong ; BL_2026-11_NV3  ; NV3   ; 11    ; 2026 ; 8.000.000    ; 1.0   ; 0           ; 26.0       ; 1.0       ; 8.0             ; 307.692         ; 1.000.000  ; 200.000      ; 0       ; 0        ; 1.507.692  ; 2026-11-12 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru
+  BangLuong ; BL_2026-11_NV01 ; NV01  ; 11    ; 2026 ; 5.200.000    ; 2.0   ; 0           ; 26.0       ; 26.0      ; 208.0           ; 10.400.000      ; 1.000.000  ; 500.000      ; 500.000 ; 0        ; 12.400.000 ; 2026-11-12 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru
+  BangLuong ; BL_2026-11_NV02 ; NV02  ; 11    ; 2026 ; 0            ; 0.0   ; 30.000      ; 26.0       ; 25.9375   ; 207.5           ; 6.225.000       ; 300.000    ; 200.000      ; 300.000 ; 50.000   ; 6.975.000  ; 2026-11-12 ; gioHuongLuong * donGia + PC + thuong - tru
+  BangLuong ; BL_2026-09_NV02 ; NV02  ; 9     ; 2026 ; 0            ; 0.0   ; 30.000      ; 26.0       ; 25.9375   ; 207.5           ; 6.225.000       ; 300.000    ; 200.000      ; 200.000 ; 50.000   ; 6.875.000  ; 2026-11-21 ; gioHuongLuong * donGia + PC + thuong - tru
+  BangLuong ; BL_2026-09_NV3  ; NV3   ; 9     ; 2026 ; 8.000.000    ; 1.0   ; 0           ; 26.0       ; 26.0      ; 208.0           ; 8.000.000       ; 1.000.000  ; 200.000      ; 300.000 ; 0        ; 9.500.000  ; 2026-11-21 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru
+  BangLuong ; BL_2026-09_NV01 ; NV01  ; 9     ; 2026 ; 5.200.000    ; 2.0   ; 0           ; 26.0       ; 26.0      ; 208.0           ; 10.400.000      ; 1.000.000  ; 500.000      ; 500.000 ; 0        ; 12.400.000 ; 2026-11-21 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru
+  BangLuong ; BL_2026-10_NV02 ; NV02  ; 10    ; 2026 ; 0            ; 0.0   ; 30.000      ; 26.0       ; 25.9375   ; 207.5           ; 6.225.000       ; 300.000    ; 200.000      ; 200.000 ; 50.000   ; 6.875.000  ; 2026-11-21 ; gioHuongLuong * donGia + PC + thuong - tru
+  BangLuong ; BL_2026-10_NV3  ; NV3   ; 10    ; 2026 ; 8.000.000    ; 1.0   ; 0           ; 26.0       ; 25.0      ; 200.0           ; 7.692.308       ; 1.000.000  ; 200.000      ; 300.000 ; 100.000  ; 9.092.308  ; 2026-11-21 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru
+  BangLuong ; BL_2026-10_NV01 ; NV01  ; 10    ; 2026 ; 5.200.000    ; 2.0   ; 0           ; 26.0       ; 26.0      ; 208.0           ; 10.400.000      ; 1.000.000  ; 500.000      ; 500.000 ; 0        ; 12.400.000 ; 2026-11-21 ; LCB * heSo / ngayChuan * ngayCong + PC + thuong - tru

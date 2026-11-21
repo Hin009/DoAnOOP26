@@ -42,7 +42,12 @@ public final class KiemTra {
     }
     public static LocalDate ngay(LocalDate d) { return Objects.requireNonNull(d, "Thieu ngay."); }
     public static String dong(Object... fields) {
-        return java.util.Arrays.stream(fields).map(String::valueOf).collect(java.util.stream.Collectors.joining(";"));
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < fields.length; i++) {
+            if (i > 0) line.append(';');
+            line.append(fields[i]);
+        }
+        return line.toString();
     }
     public static double tien(double n) {
         if (!Double.isFinite(n) || Math.abs(n) > 9e15) throw new IllegalArgumentException("So tien vuot gioi han.");

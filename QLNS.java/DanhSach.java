@@ -1,9 +1,8 @@
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
-/** Mang doi tuong tu mo rong; khong dung ArrayList lam bo nho luu danh sach. */
+/** Quan ly mang doi tuong thuong, tu mo rong khi day. */
 public class DanhSach<T extends BanGhi> implements Iterable<T> {
     private T[] ds;
     private int n;
@@ -51,13 +50,20 @@ public class DanhSach<T extends BanGhi> implements Iterable<T> {
             ds[j + 1] = x;
         }
     }
-    /** Ban sao chi doc de hien thi/tuong thich API cu. */
-    public List<T> danhSach() {
-        List<T> copy = new ArrayList<>();
-        for (int i = 0; i < n; i++) copy.add(get(i));
-        return java.util.Collections.unmodifiableList(copy);
+    /** Tra ban sao mang dung kieu, chi gom n phan tu dang su dung. */
+    public T[] danhSach() { return Arrays.copyOf(ds, n); }
+    /** Iterator duyet ban sao mang de ho tro vong lap for-each. */
+    @Override public Iterator<T> iterator() {
+        final T[] copy = danhSach();
+        return new Iterator<T>() {
+            private int viTri = 0;
+            @Override public boolean hasNext() { return viTri < copy.length; }
+            @Override public T next() {
+                if (!hasNext()) throw new NoSuchElementException("Het phan tu.");
+                return copy[viTri++];
+            }
+        };
     }
-    @Override public Iterator<T> iterator() { return danhSach().iterator(); }
     public void xuatDanhSach() {
         for (T x : this) System.out.println(x);
         System.out.println("So luong: " + n);

@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Locale;
 
 /** Dieu phoi nghiep vu va kiem tra lien ket giua cac danh sach theo UML. */
 public class QuanLyNhanSu implements IFileText {
@@ -39,9 +41,9 @@ public class QuanLyNhanSu implements IFileText {
     public DanhSachChiTietTruLuong getDsChiTietTruLuong() { return dsCTTruLuong; }
     public DanhSachBangLuong getDsBangLuong() { return dsBangLuong; }
     public FileStore getFileStore() { return fileStore; }
-    public List<DanhSach<? extends BanGhi>> cacDanhSach() {
-        return List.of(dsPhongBan, dsChucVu, dsNhanVien, dsTrangThai, dsChamCong,
-            dsQDThamNien, dsThuong, dsCTThuong, dsQDTL, dsCTTruLuong, dsBangLuong);
+    public DanhSach<?>[] cacDanhSach() {
+        return new DanhSach<?>[] { dsPhongBan, dsChucVu, dsNhanVien, dsTrangThai, dsChamCong,
+            dsQDThamNien, dsThuong, dsCTThuong, dsQDTL, dsCTTruLuong, dsBangLuong };
     }
     private static <T extends BanGhi> T canCo(DanhSach<T> ds, String ma) {
         T x = ds.timTheoMa(ma);
@@ -72,12 +74,16 @@ public class QuanLyNhanSu implements IFileText {
             NhanVien truong = canCo(dsNhanVien, pb.getMaTruongPhong());
             if (!truong.getMaPB().equals(pb.getMaPB())) throw new IllegalArgumentException("Truong phong phai thuoc phong " + pb.getMaPB());
         }
-        Set<String> ngayNV = new HashSet<>();
+        String[] ngayNV = new String[dsChamCong.getSoLuong()];
+        int soNgay = 0;
         for (ChamCong cc : dsChamCong) {
             NhanVien nv = canCo(dsNhanVien, cc.getMaNhanVien());
             TrangThai tt = canCo(dsTrangThai, cc.getTrangThai());
             if (cc.getNgay().isBefore(nv.getNgayVaoLam())) throw new IllegalArgumentException("Cham cong truoc ngay vao lam: " + cc.getMa());
-            if (!ngayNV.add(nv.getMa()+"/"+cc.getNgay())) throw new IllegalArgumentException("Moi NV chi co mot ban ghi cham cong/ngay.");
+            String keyNgay = nv.getMa()+"/"+cc.getNgay();
+            for (int i = 0; i < soNgay; i++) if (ngayNV[i].equals(keyNgay))
+                throw new IllegalArgumentException("Moi NV chi co mot ban ghi cham cong/ngay.");
+            ngayNV[soNgay++] = keyNgay;
             if (cc.getGioVao() == null && cc.getGioRa() != null) throw new IllegalArgumentException("Co gio ra nhung thieu gio vao.");
             if ((tt.getGioMacDinh() > 0 || tt.getHeSoHuongLuong() == 0) && (cc.getGioVao() != null || cc.getGioRa() != null))
                 throw new IllegalArgumentException("Trang thai nghi/vang phai de gio vao va ra la '-'.");
@@ -97,10 +103,14 @@ public class QuanLyNhanSu implements IFileText {
             NhanVien nv = canCo(dsNhanVien, ct.getMaNV()); canCo(dsQDTL, ct.getMaQDTL());
             if (ct.getNgayTru().isBefore(nv.getNgayVaoLam())) throw new IllegalArgumentException("Khau tru truoc ngay vao lam.");
         }
-        Set<String> kyNV = new HashSet<>();
+        String[] kyNV = new String[dsBangLuong.getSoLuong()];
+        int soKy = 0;
         for (BangLuong bl : dsBangLuong) {
             canCo(dsNhanVien, bl.getMaNV()); YearMonth.of(bl.getNam(), bl.getThang());
-            if (!kyNV.add(bl.getMaNV()+"/"+bl.getNam()+"/"+bl.getThang())) throw new IllegalArgumentException("Trung bang luong cung ky/NV.");
+            String keyKy = bl.getMaNV()+"/"+bl.getNam()+"/"+bl.getThang();
+            for (int i = 0; i < soKy; i++) if (kyNV[i].equals(keyKy))
+                throw new IllegalArgumentException("Trung bang luong cung ky/NV.");
+            kyNV[soKy++] = keyKy;
             if (bl.getNgayCongTieuChuan() <= 0 || bl.getNgayCongTieuChuan() > 31) throw new IllegalArgumentException("Ngay cong chuan: 1..31.");
             double expected = KiemTra.tien(bl.getLuongTheoCong()+bl.getPhuCapChucVu()+bl.getPhuCapThamNien()+bl.getTongThuong()-bl.getTongKhauTru());
             if (Math.abs(expected - bl.getLuongThucNhan()) > 0.01) throw new IllegalArgumentException("Sai tong luong thuc nhan: " + bl.getMa());
@@ -163,58 +173,64 @@ public class QuanLyNhanSu implements IFileText {
         }
         dsBangLuong = moi;
     }
-    public List<BangLuong> bangLuongThang(YearMonth ky) {
-        List<BangLuong> result = new ArrayList<>();
-        for (BangLuong b : dsBangLuong) if (b.getThang() == ky.getMonthValue() && b.getNam() == ky.getYear()) result.add(b);
-        result.sort(Comparator.comparingDouble(BangLuong::getLuongThucNhan).reversed());
+    public BangLuong[] bangLuongThang(YearMonth ky) {
+        BangLuong[] result = new BangLuong[dsBangLuong.getSoLuong()];
+        int n = 0;
+        for (BangLuong b : dsBangLuong)
+            if (b.getThang() == ky.getMonthValue() && b.getNam() == ky.getYear()) result[n++] = b;
+        result = Arrays.copyOf(result, n);
+        Arrays.sort(result, Comparator.comparingDouble(BangLuong::getLuongThucNhan).reversed());
         return result;
     }
     public void xuatBaoCao(YearMonth ky, String file) throws IOException {
-        if (bangLuongThang(ky).isEmpty()) throw new IllegalArgumentException("Chua co bang luong ky nay.");
+        if (bangLuongThang(ky).length == 0) throw new IllegalArgumentException("Chua co bang luong ky nay.");
         FileStore.ghiNguyenTu(Path.of(file), noiDungBaoCao(ky));
     }
-    /** Dung chung cho bao cao text va terminal de giu cung mot cach trinh bay. */
-    public List<String> noiDungBaoCao(YearMonth ky) {
-        List<BangLuong> list = bangLuongThang(ky);
-        List<String> lines = new ArrayList<>();
-        lines.add("BANG LUONG THANG " + ky + " (VND)");
-        lines.add("Sap xep theo thuc nhan giam dan. Don vi tien: VND.");
-        if (list.isEmpty()) {
-            lines.add("Chua co bang luong trong thang nay.");
-            return lines;
-        }
+    /** Dung chung cho file va terminal; moi dong la mot phan tu mang. */
+    public String[] noiDungBaoCao(YearMonth ky) {
+        BangLuong[] list = bangLuongThang(ky);
+        String tieuDe = "BANG LUONG THANG " + ky + " (VND)";
+        String moTa = "Sap xep theo thuc nhan giam dan. Don vi tien: VND.";
+        if (list.length == 0) return new String[] { tieuDe, moTa, "Chua co bang luong trong thang nay." };
+        String[] lines = new String[3 * list.length + 22];
+        int viTri = 0;
+        lines[viTri++] = tieuDe; lines[viTri++] = moTa;
         java.text.NumberFormat tien = java.text.NumberFormat.getIntegerInstance(Locale.forLanguageTag("vi-VN"));
         java.text.NumberFormat cong = java.text.NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN"));
         cong.setMaximumFractionDigits(4);
-        List<String[]> nhanVien = new ArrayList<>(), phuCap = new ArrayList<>(), thucNhan = new ArrayList<>();
+        String[][] nhanVien = new String[list.length][], phuCap = new String[list.length][], thucNhan = new String[list.length][];
         double tong = 0;
-        for (BangLuong b : list) {
-            nhanVien.add(new String[] { b.getMaNV(), canCo(dsNhanVien,b.getMaNV()).getHoTen(), cong.format(b.getSoNgayCongHuongLuong()), cong.format(b.getSoGioHuongLuong()) });
-            phuCap.add(new String[] { b.getMaNV(), tien.format(b.getLuongTheoCong()), tien.format(b.getPhuCapChucVu()), tien.format(b.getPhuCapThamNien()) });
-            thucNhan.add(new String[] { b.getMaNV(), tien.format(b.getTongThuong()), tien.format(b.getTongKhauTru()), tien.format(b.getLuongThucNhan()) });
+        for (int i = 0; i < list.length; i++) {
+            BangLuong b = list[i];
+            nhanVien[i] = new String[] { b.getMaNV(), canCo(dsNhanVien,b.getMaNV()).getHoTen(), cong.format(b.getSoNgayCongHuongLuong()), cong.format(b.getSoGioHuongLuong()) };
+            phuCap[i] = new String[] { b.getMaNV(), tien.format(b.getLuongTheoCong()), tien.format(b.getPhuCapChucVu()), tien.format(b.getPhuCapThamNien()) };
+            thucNhan[i] = new String[] { b.getMaNV(), tien.format(b.getTongThuong()), tien.format(b.getTongKhauTru()), tien.format(b.getLuongThucNhan()) };
             tong += b.getLuongThucNhan();
         }
-        lines.add(""); lines.add("1. NHAN VIEN VA CHAM CONG");
-        themBangBaoCao(lines, new String[] { "Ma NV", "Ho va ten", "Ngay cong", "Gio huong luong" }, nhanVien, 2);
-        lines.add(""); lines.add("2. LUONG VA PHU CAP (VND)");
-        themBangBaoCao(lines, new String[] { "Ma NV", "Luong theo cong", "PC chuc vu", "PC tham nien" }, phuCap, 1);
-        lines.add(""); lines.add("3. THUONG, KHAU TRU VA THUC NHAN (VND)");
-        themBangBaoCao(lines, new String[] { "Ma NV", "Thuong", "Khau tru", "Thuc nhan" }, thucNhan, 1);
-        lines.add("So phieu: " + list.size());
-        lines.add("TONG THUC NHAN: " + tien.format(tong) + " VND");
-        return lines;
+        lines[viTri++] = ""; lines[viTri++] = "1. NHAN VIEN VA CHAM CONG";
+        viTri = themBangBaoCao(lines, viTri, new String[] { "Ma NV", "Ho va ten", "Ngay cong", "Gio huong luong" }, nhanVien, 2);
+        lines[viTri++] = ""; lines[viTri++] = "2. LUONG VA PHU CAP (VND)";
+        viTri = themBangBaoCao(lines, viTri, new String[] { "Ma NV", "Luong theo cong", "PC chuc vu", "PC tham nien" }, phuCap, 1);
+        lines[viTri++] = ""; lines[viTri++] = "3. THUONG, KHAU TRU VA THUC NHAN (VND)";
+        viTri = themBangBaoCao(lines, viTri, new String[] { "Ma NV", "Thuong", "Khau tru", "Thuc nhan" }, thucNhan, 1);
+        lines[viTri++] = "So phieu: " + list.length;
+        lines[viTri++] = "TONG THUC NHAN: " + tien.format(tong) + " VND";
+        return Arrays.copyOf(lines, viTri);
     }
-    private static void themBangBaoCao(List<String> lines, String[] cot, List<String[]> rows, int cotSoDauTien) {
-        int[] rong = Arrays.stream(cot).mapToInt(String::length).toArray();
-        for (int i = 0; i < cot.length; i++)
+    private static int themBangBaoCao(String[] lines, int viTri, String[] cot, String[][] rows, int cotSoDauTien) {
+        int[] rong = new int[cot.length];
+        for (int i = 0; i < cot.length; i++) {
+            rong[i] = cot[i].length();
             for (String[] row : rows) rong[i] = Math.max(rong[i], row[i].length());
+        }
         StringBuilder vien = new StringBuilder("+");
         for (int r : rong) vien.append("-".repeat(r + 2)).append('+');
-        lines.add(vien.toString());
-        lines.add(dongBaoCao(cot, rong, cot.length));
-        lines.add(vien.toString());
-        for (String[] row : rows) lines.add(dongBaoCao(row, rong, cotSoDauTien));
-        lines.add(vien.toString());
+        lines[viTri++] = vien.toString();
+        lines[viTri++] = dongBaoCao(cot, rong, cot.length);
+        lines[viTri++] = vien.toString();
+        for (String[] row : rows) lines[viTri++] = dongBaoCao(row, rong, cotSoDauTien);
+        lines[viTri++] = vien.toString();
+        return viTri;
     }
     private static String dongBaoCao(String[] cells, int[] rong, int cotSoDauTien) {
         StringBuilder line = new StringBuilder("|");
@@ -233,7 +249,8 @@ public class QuanLyNhanSu implements IFileText {
     }
     public void luu() throws IOException { fileStore.ghi(this); }
     public void taoDuLieuMau() {
-        if (cacDanhSach().stream().anyMatch(ds -> ds.getSoLuong()>0)) throw new IllegalArgumentException("Chi tao mau khi tat ca danh sach rong.");
+        for (DanhSach<?> ds : cacDanhSach())
+            if (ds.getSoLuong() > 0) throw new IllegalArgumentException("Chi tao mau khi tat ca danh sach rong.");
         dsPhongBan.them(new PhongBan("PB01","Nhan su","-")); dsPhongBan.them(new PhongBan("PB02","Ky thuat","-"));
         dsChucVu.them(new ChucVu("CV01","Nhan vien",300000)); dsChucVu.them(new ChucVu("CV02","Truong phong",1000000));
         dsNhanVien.them(new NhanVienChinhThuc("NV01","Nguyen Van An",LocalDate.of(1990,1,1),LocalDate.of(2020,1,1),"Nam","0901234567","TP HCM","CV02","PB01",5200000,"DANG_LAM",2));

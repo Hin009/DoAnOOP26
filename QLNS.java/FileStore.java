@@ -2,7 +2,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.time.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
 
 /** Moi lan luu tao file tam, sau do thay file dich; khong ghi de tung phan. */
 public class FileStore {
@@ -17,30 +18,40 @@ public class FileStore {
         ql.getDsChamCong().chuanHoaMaCu();
         java.text.NumberFormat tien = java.text.NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN"));
         tien.setMaximumFractionDigits(340);
-        List<String> lines = new ArrayList<>(); lines.add(PHIEN_BAN);
+        StringBuilder text = new StringBuilder(PHIEN_BAN).append('\n');
         for (DanhSach<? extends BanGhi> ds : ql.cacDanhSach()) {
-            Map<String, List<String[]>> nhom = new LinkedHashMap<>();
-            for (BanGhi x : ds) {
+            BanGhi[] records = ds.danhSach();
+            String[] nhom = new String[records.length];
+            int soNhom = 0;
+            for (BanGhi x : records) {
                 String loai = x.getClass().getSimpleName();
-                String[] row = (loai + ";" + x.toFileString()).split(";", -1);
-                for (int c : cotTien(loai)) row[c] = tien.format(Double.parseDouble(row[c]));
-                nhom.computeIfAbsent(loai, k -> new ArrayList<>())
-                    .add(row);
+                boolean daCo = false;
+                for (int i = 0; i < soNhom; i++) if (nhom[i].equals(loai)) { daCo = true; break; }
+                if (!daCo) nhom[soNhom++] = loai;
             }
-            for (var entry : nhom.entrySet()) {
-                lines.add("");
-                lines.add("# === " + entry.getKey() + " ===");
-                String[] cot = tenCot(entry.getKey()).split(";", -1);
-                List<String[]> rows = entry.getValue();
+            for (int g = 0; g < soNhom; g++) {
+                String loai = nhom[g];
+                int soDong = 0;
+                for (BanGhi x : records) if (x.getClass().getSimpleName().equals(loai)) soDong++;
+                String[][] rows = new String[soDong][];
+                int viTri = 0;
+                for (BanGhi x : records) {
+                    if (!x.getClass().getSimpleName().equals(loai)) continue;
+                    String[] row = (loai + ";" + x.toFileString()).split(";", -1);
+                    for (int c : cotTien(loai)) row[c] = tien.format(Double.parseDouble(row[c]));
+                    rows[viTri++] = row;
+                }
+                text.append('\n').append("# === ").append(loai).append(" ===\n");
+                String[] cot = tenCot(loai).split(";", -1);
                 int[] rong = new int[cot.length];
                 for (int i = 0; i < cot.length; i++) rong[i] = cot[i].length();
                 for (String[] row : rows)
                     for (int i = 0; i < row.length; i++) rong[i] = Math.max(rong[i], row[i].length());
-                lines.add("# " + canCot(cot, rong));
-                for (String[] row : rows) lines.add("  " + canCot(row, rong));
+                text.append("# ").append(canCot(cot, rong)).append('\n');
+                for (String[] row : rows) text.append("  ").append(canCot(row, rong)).append('\n');
             }
         }
-        ghiNguyenTu(duongDan, lines);
+        ghiNguyenTu(duongDan, text.toString().split("\n"));
     }
     private static String canCot(String[] row, int[] rong) {
         StringBuilder out = new StringBuilder();
@@ -88,27 +99,42 @@ public class FileStore {
         return Double.parseDouble(s);
     }
     public QuanLyNhanSu doc() throws IOException {
-        List<String> lines = Files.readAllLines(duongDan, StandardCharsets.UTF_8);
-        if (lines.isEmpty() || !lines.get(0).equals(PHIEN_BAN)) throw new IOException("Sai dinh dang/phien ban file.");
+        String[] lines = docDong(duongDan);
+        if (lines.length == 0 || !lines[0].equals(PHIEN_BAN)) throw new IOException("Sai dinh dang/phien ban file.");
         QuanLyNhanSu tam = new QuanLyNhanSu(duongDan.toString());
-        for (int i=1; i<lines.size(); i++) {
-            if (lines.get(i).isBlank() || lines.get(i).stripLeading().startsWith("#")) continue;
-            try { themDong(tam, lines.get(i)); }
+        for (int i=1; i<lines.length; i++) {
+            if (lines[i].isBlank() || lines[i].stripLeading().startsWith("#")) continue;
+            try { themDong(tam, lines[i]); }
             catch (RuntimeException e) { throw new IOException("Dong " +(i+1)+": "+ e.getMessage(), e); }
         }
         try { tam.kiemTraToanVen(); }
         catch (RuntimeException e) { throw new IOException("Lien ket du lieu sai: "+e.getMessage(), e); }
         return tam;
     }
-    public static void ghiNguyenTu(Path path, List<String> lines) throws IOException {
+    public static void ghiNguyenTu(Path path, String[] lines) throws IOException {
         Path absolute = path.toAbsolutePath();
         Files.createDirectories(absolute.getParent());
         Path tmp = Files.createTempFile(absolute.getParent(), ".qlns-", ".tmp");
         try {
-            Files.write(tmp, lines, StandardCharsets.UTF_8);
+            try (java.io.BufferedWriter writer = Files.newBufferedWriter(tmp, StandardCharsets.UTF_8)) {
+                for (String line : lines) { writer.write(line); writer.newLine(); }
+            }
             try { Files.move(tmp, absolute, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE); }
             catch (AtomicMoveNotSupportedException e) { Files.move(tmp, absolute, StandardCopyOption.REPLACE_EXISTING); }
         } finally { Files.deleteIfExists(tmp); }
+    }
+    /** Doc tung dong vao mang thuong, tu tang suc chua khi day. */
+    public static String[] docDong(Path path) throws IOException {
+        String[] ds = new String[32];
+        int n = 0;
+        try (java.io.BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (n == ds.length) ds = Arrays.copyOf(ds, ds.length * 2);
+                ds[n++] = line;
+            }
+        }
+        return Arrays.copyOf(ds, n);
     }
     private static void soTruong(String[] p, int n) {
         if (p.length != n) throw new IllegalArgumentException("Sai so truong: can "+n+", co "+p.length);

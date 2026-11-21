@@ -1,29 +1,27 @@
 public class DanhSachNhanVien extends DanhSach<NhanVien> {
     public DanhSachNhanVien() { super(new NhanVien[0]); }
     public void themNhanVien(NhanVien x) { them(x); }
-    public java.util.List<NhanVien> getDsNhanVien() { return danhSach(); }
+    public NhanVien[] getDsNhanVien() { return danhSach(); }
     public boolean xoaNhanVien(String ma) { return xoa(ma); }
 
     @Override
-    public void xuatDanhSach() { xuatBang(this); }
+    public void xuatDanhSach() { xuatBang(danhSach()); }
 
     /** Tach cac nhom thong tin de bang vua terminal, khong phai cuon ngang 14 cot. */
-    public static void xuatBang(Iterable<NhanVien> nguon) {
-        java.util.List<NhanVien> rows = new java.util.ArrayList<>();
-        for (NhanVien nv : nguon) rows.add(nv);
+    public static void xuatBang(NhanVien[] rows) {
         System.out.println("\n================ DANH SACH NHAN VIEN ================");
-        if (rows.isEmpty()) {
+        if (rows.length == 0) {
             System.out.println("Chua co nhan vien.\nTong so: 0 nhan vien.");
             return;
         }
         java.util.Locale vn = java.util.Locale.forLanguageTag("vi-VN");
         java.text.NumberFormat tien = java.text.NumberFormat.getIntegerInstance(vn);
         java.time.format.DateTimeFormatter ngay = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String[][] nhanSu = new String[rows.size()][];
-        String[][] lienHe = new String[rows.size()][];
-        String[][] luong = new String[rows.size()][];
-        for (int i = 0; i < rows.size(); i++) {
-            NhanVien nv = rows.get(i);
+        String[][] nhanSu = new String[rows.length][];
+        String[][] lienHe = new String[rows.length][];
+        String[][] luong = new String[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            NhanVien nv = rows[i];
             String heSo = "-", gioNgay = "-", donGia = "-";
             if (nv instanceof NhanVienChinhThuc) {
                 heSo = String.format(vn, "%.2f", ((NhanVienChinhThuc) nv).getHeSoLuong());
@@ -46,7 +44,7 @@ public class DanhSachNhanVien extends DanhSach<NhanVien> {
         System.out.println("\nTHONG TIN LUONG (VND)");
         inBang(new String[] { "Ma NV", "Luong co ban", "He so luong", "Gio/ngay du kien", "Don gia/gio" }, luong, 1);
         System.out.println("Ghi chu: '-' = khong ap dung. Luong thang duoc tinh tu cham cong.");
-        System.out.println("Tong so: " + rows.size() + " nhan vien.");
+        System.out.println("Tong so: " + rows.length + " nhan vien.");
     }
 
     private static void inBang(String[] headers, String[][] rows, int cotSoDauTien) {
@@ -82,11 +80,12 @@ public class DanhSachNhanVien extends DanhSach<NhanVien> {
         }
         return tong;
     }
-    public java.util.List<NhanVien> timKiem(String key) {
+    public NhanVien[] timKiem(String key) {
         String k = key.toLowerCase(java.util.Locale.ROOT);
-        java.util.List<NhanVien> result = new java.util.ArrayList<>();
+        NhanVien[] result = new NhanVien[getSoLuong()];
+        int n = 0;
         for (NhanVien nv : this)
-            if ((nv.getMaNV()+" "+nv.getHoTen()+" "+nv.getMaPB()).toLowerCase(java.util.Locale.ROOT).contains(k)) result.add(nv);
-        return result;
+            if ((nv.getMaNV()+" "+nv.getHoTen()+" "+nv.getMaPB()).toLowerCase(java.util.Locale.ROOT).contains(k)) result[n++] = nv;
+        return java.util.Arrays.copyOf(result, n);
     }
 }

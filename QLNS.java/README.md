@@ -18,7 +18,6 @@ Hoặc dùng script PowerShell (nếu máy cho phép chạy script):
 ```powershell
 .\run.ps1
 .\run.ps1 -Demo
-.\run.ps1 -Test
 ```
 
 Biên dịch/chạy thủ công:
@@ -38,7 +37,6 @@ Các tùy chọn:
 .\run.bat --demo
 .\run.bat --data data\cong-ty.txt
 .\run.bat --data data\trong.txt --trong
-java -cp build TestHeThong
 ```
 
 `--demo` chỉ chạy mẫu trong bộ nhớ rồi thoát. `--trong` bắt đầu rỗng khi file chỉ định chưa tồn tại; không xóa file đã có. Mặc định dùng `data/qlns.txt`, đường dẫn tính từ thư mục chương trình khi dùng script. Lần chạy đầu tự tạo dữ liệu minh họa tháng **11/2026**, gồm 2 nhân viên và 52 lượt chấm công. Dữ liệu minh họa có cả những ngày sau ngày hiện tại để trình diễn một tháng đủ công.
@@ -109,7 +107,7 @@ Kết quả mẫu tháng 11/2026:
 
 | Tiêu chí | Bằng chứng mã nguồn |
 |---|---|
-| Ít nhất 15 class | **33 class ứng dụng**, cộng 2 class kiểm thử; 3 interface không tính vào số class |
+| Ít nhất 15 class | **33 class ứng dụng**; 3 interface không tính vào số class |
 | Constructor | Tất cả class đều khai báo constructor; lớp con gọi `super(...)` |
 | Kế thừa hợp lý | `NhanVienChinhThuc`, `NhanVienThoiVu` kế thừa `NhanVien`; 11 danh sách kế thừa lớp mảng `DanhSach<T>` |
 | Cài đặt và sử dụng đa hình | `QuanLyNhanSu.lapBangLuong` gọi `nv.tinhLuongTheoCong(...)` qua biến `NhanVien`; mỗi loại thực thi công thức riêng |
@@ -118,11 +116,11 @@ Kết quả mẫu tháng 11/2026:
 | Static | `QuanLyNhanSu.NGAY_CONG_TIEU_CHUAN`, `ChamCong.SO_GIO_MOT_CONG`, `FileStore.PHIEN_BAN`; các hàm `KiemTra.*`, `FileStore.ghiNguyenTu` được sử dụng thực tế |
 | Abstract class/method | `NhanVien` là abstract; khai báo abstract `tinhLuong()`, `tinhLuongTheoCong(...)`, `getLoai()` |
 | Interface | `TinhLuong`, `IFileText`, `BanGhi`; `QuanLyNhanSu implements IFileText`, `NhanVien implements TinhLuong, BanGhi` |
-| Sáng tạo | Ca qua đêm, nghỉ phép hưởng lương, báo cáo/phiếu lương, tìm kiếm/thống kê, bảo vệ liên kết, giữ dữ liệu khi file lỗi, kiểm thử tự động |
+| Sáng tạo | Ca qua đêm, nghỉ phép hưởng lương, báo cáo/phiếu lương, tìm kiếm/thống kê, bảo vệ liên kết, giữ dữ liệu khi file lỗi |
 
 Các mức điểm trong yêu cầu cộng thành **11 điểm**; bảng này chỉ đối chiếu chức năng, việc cho điểm/quy đổi do giảng viên quyết định.
 
-UML gốc dùng `ArrayList`. Bản triển khai chủ động dùng mảng đối tượng có kiểu để đáp ứng yêu cầu chấm “array”. `List`/`ArrayList` chỉ dùng cho bản sao đọc, kết quả tìm kiếm, báo cáo và việc xử lý dòng text, không làm kho lưu chính của các lớp danh sách.
+UML gốc dùng `ArrayList`; bản triển khai dùng **mảng thường trong toàn bộ mã Java**, kể cả tìm kiếm, xử lý file và xuất bảng. Không dùng `List`, `ArrayList`, `Map` hay `Set`. `DanhSach<T>` lưu `T[] ds` và số phần tử `n`; lớp con khởi tạo mảng có kiểu như `new NhanVien[0]`. Khi đầy thì tạo mảng lớn hơn bằng `Arrays.copyOf`, khi xóa thì dịch phần tử bằng `System.arraycopy`. Getter và kết quả tìm kiếm trả mảng sao chép (`NhanVien[]`, `ChamCong[]`, `BangLuong[]`), nên thay ô trong mảng trả về không thay ô của mảng lưu trữ. `Iterable`/`Iterator` chỉ hỗ trợ vòng lặp for-each trên mảng, không phải kho lưu trữ dữ liệu.
 
 ## Cấu trúc
 
@@ -133,20 +131,25 @@ UML gốc dùng `ArrayList`. Bản triển khai chủ động dùng mảng đố
 - `DanhSach` và 11 lớp `DanhSach...`: mảng đối tượng theo từng thực thể.
 - `FileStore`, `KiemTra`: file text và kiểm tra dữ liệu.
 - `QuanLyNhanVien`, `BangChamCong`: giữ API module cũ để chạy riêng; menu chính sử dụng các lớp `DanhSach...` thống nhất. `QuanLyNhanVien` tái sử dụng mảng của `DanhSachNhanVien`.
-- `TestHeThong`: kiểm thử tích hợp bằng Java thuần; `TestBangChamCong`: chương trình thử module chấm công cũ.
 - [BAO_VE_DO_AN.md](BAO_VE_DO_AN.md): lý thuyết, câu hỏi về đồ án, bài tập gõ code và kịch bản demo.
 - [SO_DO_LOP.mmd](SO_DO_LOP.mmd): sơ đồ quan hệ chính của mã hiện tại.
 
-File `nhansu.txt` có sẵn được giữ nguyên. Nội dung cũ có loại nhân viên khác `CT`/`TV`, không phải dữ liệu của chương trình hoàn thiện. File mới có dòng đầu `QLNS_TEXT_V1`, tiếp theo mỗi dòng là `TênLớp;trường1;trường2;...`. Chuỗi không được chứa `;` hoặc xuống dòng; ngày dùng ISO `yyyy-MM-dd`. Cả tiếng Việt có dấu và tên chứa khoảng trắng đều được lưu bằng UTF-8.
+Dữ liệu chính lưu tại `data/qlns.txt`. File có dòng đầu `QLNS_TEXT_V1`, tiếp theo mỗi dòng là `TênLớp;trường1;trường2;...`. Chuỗi không được chứa `;` hoặc xuống dòng; ngày dùng ISO `yyyy-MM-dd`. Cả tiếng Việt có dấu và tên chứa khoảng trắng đều được lưu bằng UTF-8.
 
-## Kiểm thử
+## Dữ liệu và cách kiểm tra bằng menu
 
 File `data/qlns.txt` được chia theo nhóm bản ghi, có tên cột và các cột căn thẳng để xem trong trình soạn thảo. Dòng bắt đầu bằng `#` là chú thích, dòng trống dùng để ngăn nhóm; chương trình bỏ qua các dòng này khi đọc. Dấu `;` vẫn phân cách trường, khoảng trắng căn cột được bỏ qua khi đọc. File cũ chưa căn cột vẫn đọc được; mỗi lần lưu sẽ dùng cách trình bày mới. Nên tắt Word Wrap khi xem các dòng nhân viên/bảng lương dài trong VS Code.
 
-```powershell
-.\run.ps1 -Test
-# Hoặc, sau khi biên dịch:
-java -cp build TestHeThong
-```
 
-Bộ kiểm thử kiểm tra kết quả lương mẫu, lọc tháng, tính lại không trùng, ca qua đêm, nghỉ phép/vắng, ca chưa chấm ra, phụ cấp theo mốc năm, khấu trừ vượt lương, chống trùng/khóa ngoại, thao tác mảng, lưu/đọc mọi loại bản ghi, UTF-8 và file sai. Chạy trong thư mục tạm rồi tự dọn dữ liệu kiểm thử.
+
+### Dữ liệu tháng 9 và tháng 10/2026
+
+File `data/qlns.txt` đã bổ sung dữ liệu minh họa cho cả 3 nhân viên đang có: chấm công, thưởng, khấu trừ và bảng lương tháng **09/2026**, **10/2026**. Mỗi nhân viên có 26 bản ghi/tháng, chọn ngày từ thứ Hai đến thứ Bảy; tháng 10 lấy 26 ngày đầu phù hợp lịch này. Dữ liệu minh họa có đi muộn, nghỉ phép hưởng lương và nghỉ không lương để dễ so sánh cách tính. Đây là dữ liệu mẫu bổ sung, không phải lịch làm việc thực tế.
+
+Mã chấm công tiếp tục số thứ tự của từng nhân viên, không trùng mã cũ. Lương dùng thông tin hiện tại của nhân viên và ngày chuẩn 26; dữ liệu tháng 11 đã có được giữ nguyên.
+
+- Chọn **11 → 2**, nhập `2026-09` hoặc `2026-10` để xem bảng lương đã lập.
+- Chọn **12**, nhập tháng tương ứng để xuất lại báo cáo. Hai báo cáo đã có sẵn trong `reports/bang-luong-2026-09.txt` và `reports/bang-luong-2026-10.txt`.
+- Khi sửa chấm công/thưởng/trừ, chọn **11 → 1** để tính lại tháng liên quan.
+
+Project chỉ giữ mã chương trình chính; các file test và tùy chọn chạy test đã được bỏ. `KiemTra.java` vẫn cần thiết vì kiểm tra dữ liệu nhập trong chương trình. Có thể kiểm tra trực tiếp qua menu: tìm trùng mã, nhập ngày sai, hủy thao tác, đối chiếu lương và lưu/mở lại file.
